@@ -25,6 +25,9 @@ jobs:
       with:
         args: "--option1 'value1'"
 
+    - name: Print outputs
+      run: echo $GITHUB_OUTPUT
+
     - name: Compare outputs
       uses: nick-fields/assert-action@v1
       with:
