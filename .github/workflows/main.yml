@@ -26,7 +26,7 @@ jobs:
         args: "--option1 'value1'"
 
     - name: Print outputs
-      run: echo ${{ steps.actual.outputs }}
+      run: echo ${{ steps.actual.outputs.results }}
 
     - name: Compare outputs
       uses: nick-fields/assert-action@v1
