@@ -2,3 +2,4 @@
 
 results=$(echo "$@" | xargs github-workflow)
 echo "results=$results" >> $GITHUB_OUTPUT
+# echo "results=$results"
