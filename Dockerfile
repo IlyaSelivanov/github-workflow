@@ -8,5 +8,6 @@ COPY --from=build /usr/local/cargo/bin/github-workflow /usr/local/bin/github-wor
 
 FROM runtime as action
 COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT [ /entrypoint.sh ]
+ENTRYPOINT [ "/entrypoint.sh" ]
