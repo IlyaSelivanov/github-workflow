@@ -1,0 +1,32 @@
+name: Check own GitHub action
+on:
+  workflow_dispatch:
+
+jobs:
+  check_action:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v3
+
+    - name: Install stable toolchain
+      uses: dtolnay/rust-toolchain@stable
+
+    - name: Install Action
+      run: cargo install --path .
+
+    - name: Run action
+      id: expected
+      run: echo "results=$(github-workflow --option1 'value1')" >> $GITHUB_OUTPUT
+
+    - name: Uses an action in the root directory
+      uses: ./  # This is a trick to use the local GitHub action
+      id: actual
+      with:
+        args: "--option1 'value1'"
+
+    - name: Compare outputs
+      uses: nick-fields/assert-action@v1
+      with:
+        expected: ${{ steps.expected.outputs.files }}
+        actual: ${{ steps.actual.outputs.files }}
