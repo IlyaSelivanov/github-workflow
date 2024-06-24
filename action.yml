@@ -1,5 +1,16 @@
-name: "Rust GitHub Action"
-description: "A custom GitHub Action written in Rust"
+name: Rust github action
+author: Ilya Selivanov
+description: Simple tests for Rust github action
+inputs:
+  args:
+    description: Arguments passed to the action
+    required: true
+    default: ""
+outputs:
+  results:
+    description: The results from calling the action
 runs:
-  using: "docker"
-  image: "Dockerfile"
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.args }}

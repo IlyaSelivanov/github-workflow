@@ -1,10 +1,12 @@
-# Use an official Rust image
-FROM rust:latest
-
-# Create a new binary project
-WORKDIR /usr/src/github-action
+FROM rust:latest AS build
 COPY . .
+RUN rustup target add x86_64-unknown-linux-musl
+RUN cargo install --path . --target x86_64-unknown-linux-musl
 
-RUN cargo build --release
+FROM alpine:latest AS runtime
+COPY --from=build /usr/local/cargo/bin/github-workflow /usr/local/bin/github-workflow
 
-CMD cargo run
+FROM runtime as action
+COPY entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT [ /entrypoint.sh ]
